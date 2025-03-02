@@ -1,4 +1,3 @@
-import { Button } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Nav";
 import { Route, Routes } from "react-router-dom";
@@ -9,8 +8,9 @@ import NotFound from "./pages/NotFound";
 import axios from "axios";
 import Profile from "./pages/Profile";
 const App = () => {
-    const [users, setUsers] = useState(null);
-    const [isLoged, setIsLoged] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState({});
+    const [isLoged, setIsLoged] = useState(localStorage.getItem("uid") ? true : false);
     useEffect(() => {
         axios({
             method: "get",
@@ -18,7 +18,16 @@ const App = () => {
         }).then((res) => {
             setUsers(res.data);
         });
-    }, []);
+        if(localStorage.getItem("uid")){
+            axios({
+                method: "get",
+                url: `http://localhost:3000/users/${localStorage.getItem("uid")}`,
+            }).then((res) => {
+                setUser(res.data);
+            });  
+        }
+    }, [isLoged]);
+
 
     return (
         <div>
@@ -28,7 +37,7 @@ const App = () => {
                 <Route path="/*" element={<NotFound />} />
                 <Route path="/login" element={<LogIn users={users}  setIsLoged={setIsLoged}/>} />
                 <Route path="/signup" element={<SignUp users={users} />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile user={user} users={users} />} />
             </Routes>
         </div>
     );

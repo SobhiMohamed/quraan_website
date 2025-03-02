@@ -6,25 +6,23 @@ import img from "../assets/1.jpg";
 const LogIn = ({users,setIsLoged}) => {
     const navigate = useNavigate();
     const [user, setUser] = useState({
-        username: "",
         password: "",
-        confirm_password: "",
         email: "",
-        birthday: "",
-        gender: "",
-        role: "user",
+        id:null
     });
     const [error, setError] = useState(null);
 
     const test = (t) => {
         t.preventDefault();
-        users.map(({ email,password }) => {
+        users.map(({ email,password ,id}) => {
           if (email === user.email&&password===user.password) {
-              setError("notFound");
+              setError("exist");
+              setUser({...user,id:id});
           }
       });
-        if(error===null){
+        if(error==="exist"){
           setIsLoged(true);
+          localStorage.setItem("uid",user.id);
           navigate("/");
         }
     };
@@ -32,7 +30,7 @@ const LogIn = ({users,setIsLoged}) => {
         <div className="w-[100%] h-[100vh] flex justify-center items-center">
             <form
                 method="post"
-                className="flex flex-wrap  p-5 justify-center items-center w-[60%] border-[2px] border-[#012f61] rounded-2xl shadow-2xl"
+                className="flex flex-wrap  p-5 justify-center items-center  gap-2 w-[60%] border-[2px] border-[#012f61] rounded-2xl shadow-2xl"
                 onSubmit={test}
             >
                 <div className="lg:w-[48%] flex gap-10 flex-wrap">
@@ -64,9 +62,9 @@ const LogIn = ({users,setIsLoged}) => {
                 </div>
                 <Button
                     type="submit"
-                    className="w-[50%] cursor-pointer bg-[#012f61]"
+                    className="w-[50%] cursor-pointer bg-[#012f61] "
                 >
-                    Sign Up
+                    Log In
                 </Button>
             </form>
         </div>

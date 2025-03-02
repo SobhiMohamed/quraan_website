@@ -143,7 +143,7 @@ const Nav = ({ isLoged }) => {
                     {navList}
                     {isLoged ? (
                         <div
-                            className="bg-[#045b9e] rounded-[50%] p-4 relative cursor-pointer w-[7.5%]"
+                            className="bg-[#045b9e] rounded-[50%] p-4 relative cursor-pointer w-[62px]"
                             onClick={() => setOpenYourSitting(!openYourSitting)}
                         >
                             <FaUserCircle
