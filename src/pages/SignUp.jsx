@@ -2,9 +2,7 @@ import { Button, Input, Option, Select } from "@material-tailwind/react";
 import React, { useState, } from "react";
 import img from "../assets/5.jpg";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-const SignUp = ({users}) => {
-    const navigate = useNavigate();
+const SignUp = ({users,navigate}) => {
     const [user, setUser] = useState({
         username: "",
         password: "",
@@ -49,7 +47,7 @@ const SignUp = ({users}) => {
             delete user.confirm_password;
             axios({
                 method: "post",
-                url: "http://localhost:3000/users",
+                url:`${import.meta.env.VITE_SERVER}/users`,
                 data: user,
             }).then((res) => {
                 navigate("/login");

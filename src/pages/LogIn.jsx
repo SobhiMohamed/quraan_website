@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import img from "../assets/1.jpg";
 
-const LogIn = ({users,setIsLoged}) => {
-    const navigate = useNavigate();
+const LogIn = ({users,setIsLoged,navigate}) => {
     const [user, setUser] = useState({
         password: "",
         email: "",
